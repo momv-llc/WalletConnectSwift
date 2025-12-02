@@ -4,7 +4,6 @@
 
 import Foundation
 import CryptoSwift
-import Security
 
 struct HexString: Codable {
     var data: Data
