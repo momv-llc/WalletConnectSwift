@@ -3,8 +3,9 @@
 //
 
 import Foundation
-import Network
-
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 #if os(iOS)
 import UIKit
 #endif
@@ -24,8 +25,6 @@ class WebSocketConnection {
             self?.handleEvent(event)
         })
         let configuration = URLSessionConfiguration.default
-        configuration.shouldUseExtendedBackgroundIdleMode = true
-        configuration.waitsForConnectivity = true
 
         return URLSession(configuration: configuration, delegate: delegate, delegateQueue: nil)
     }()
