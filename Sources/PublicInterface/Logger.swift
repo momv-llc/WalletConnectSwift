@@ -7,7 +7,9 @@
 //
 
 import Foundation
+#if canImport(os)
 import os.log
+#endif
 
 public enum LoggerLevel: Int {
     case none = 0
@@ -25,7 +27,9 @@ public protocol Logger {
 }
 
 public class ConsoleLogger: Logger {
+#if canImport(os)
     static var consoleLogger: OSLog = OSLog(subsystem: "com.walletconnect", category: "WalletConnectSwift")
+#endif
 
     public func error(_ message: String) {
         log(message, level: .error)
@@ -47,12 +51,16 @@ public class ConsoleLogger: Logger {
 #if DEBUG
         guard level.rawValue <= LogService.level.rawValue else { return }
 
+#if canImport(os)
         os_log(
             "%{private}@",
             log: ConsoleLogger.consoleLogger,
             type: OSLogType.debug,
             message
         )
+#else
+        print(message)
+#endif
 #endif
     }
 }
